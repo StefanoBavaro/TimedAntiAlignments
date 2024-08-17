@@ -85,7 +85,7 @@ class ATMG:
         ordered_transitions.reverse()
         self.mapping = self.retrieve_mapping(ordered_transitions)
 
-        print(self.mapping)
+        #print(self.mapping)
         temp = [("t"+str(i), self.get_interval(self.idx(transition))) for i,transition in enumerate(ordered_transitions)]
 
         self.ordered_trns = temp
@@ -156,6 +156,10 @@ class ATMG:
             arcs = cls.gen_arcs_type0(dimension)
         elif type_atmg == 1:
             arcs = cls.gen_arcs_type1(dimension)
+        elif type_atmg == 2:
+            arcs = cls.gen_arcs_type2(dimension)
+        else: 
+            raise ValueError(f"Type {type_atmg} is not a valid type.")
         return cls(arcs,intervals)
 
     @classmethod
@@ -297,8 +301,8 @@ class ATMG:
         return log
     
     @staticmethod
-    def gen_arcs_type0(dimension):
-        #returns a petri net with all transitions in parallel and not linked to each other
+    def gen_arcs_type2(dimension):
+        
         arcs = []
 
         last_p = 0
@@ -328,7 +332,7 @@ class ATMG:
 
         return arcs
         
-    """
+    
     @staticmethod
     def gen_arcs_type0(dimension):
         #returns a petri net with all transitions in parallel and not linked to each other
@@ -337,7 +341,7 @@ class ATMG:
             arcs.append(("p"+str(i), "t"+str(i)))
             arcs.append(("t"+str(i), "p"+str(dimension+i)))
         return arcs
-    """
+    
 
     @staticmethod
     def gen_arcs_type1(dimension):
@@ -721,3 +725,11 @@ elif ex == 4:
     intervals = [(0,2),(0,3),(0,1)]
 """
 
+model = ATMG.random(7, 0, 10, 0, False)
+print(0,model)
+
+model = ATMG.random(7, 0, 10, 1, False)
+print(1,model)
+
+model = ATMG.random(7, 0, 10, 2, False)
+print(2,model)
